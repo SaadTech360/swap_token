@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
-import { IERC20 } from"./interfaces/IERC20.sol";
+import { IERC20 } from "./interfaces/IERC20.sol";
 import { Events } from "./lib/events.sol";
 
 
@@ -9,15 +9,14 @@ contract TokenB is IERC20 {
     
     string tokenName;
     string tokenSymbol;
-    uint256 tokenValue;
+    uint256 tokenValue = 3;
 
     mapping(address => uint256) balances;
     mapping (address => mapping(address => uint256)) allowances;
 
-    constructor(string memory _tokenName, string memory _tokenSymbol,uint256 _tokenValue) {
+    constructor(string memory _tokenName, string memory _tokenSymbol) {
       tokenName = _tokenName;
       tokenSymbol = _tokenSymbol;
-      tokenValue = _tokenValue;
     }
 
     function balanceOf(address tokenHolder) external view returns (uint256) {
@@ -94,6 +93,6 @@ contract TokenB is IERC20 {
     }
 
     function getTokenValue() external view returns(uint256){
-        return tokenValue
+        return tokenValue;
     }
 }

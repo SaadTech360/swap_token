@@ -14,3 +14,5 @@ def swap_token_b(token_a_value,token_b_value,unit):
 value = swap_token_b(token_a_value,token_b_value,10)
 print(value_a)
 print(value)
+
+depaddress = 0x32FcE12f2d6C6821D254dA5BC4B432eA78Ce0bAF

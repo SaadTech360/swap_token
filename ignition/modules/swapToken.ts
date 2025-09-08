@@ -1,10 +1,29 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-export default buildModule("swapTokenModule", (m) => {
-  const tokenA = m.contract("tokenA");
-  const tokenB = m.contract("tokenA");
-  const swapToken = m.contract("swapToken");
+const SwapModule = buildModule("SwapModule", (m) => {
+  // Add unique IDs to avoid conflicts
+  const tokenA = m.contract("TokenB", ["TokA", "TKNA"], {
+    id: "TokenA"
+  });
+  
+  const tokenB = m.contract("TokenA", ["TokB", "TKNB"], {
+    id: "TokenB"
+  });
+  
+  const swapToken = m.contract("SwapTokens", [tokenA, tokenB], {
+    id: "SwapToken"
+  });
 
-
-  return { tokenA,tokenB,swapToken };
+  return { tokenA, tokenB, swapToken };
 });
+
+module.exports = SwapModule;
+
+// export default buildModule("SwapTokenModule", (m) => {
+//   const tokenA = m.contract("TokenA",["Toka","TKA"]);
+//   const tokenB = m.contract("TokenA",["Tokb","TKB"]);
+//   const swapToken = m.contract("SwapTokens",[tokenA,tokenB]);
+
+
+//   return { tokenA,tokenB,swapToken };
+// });

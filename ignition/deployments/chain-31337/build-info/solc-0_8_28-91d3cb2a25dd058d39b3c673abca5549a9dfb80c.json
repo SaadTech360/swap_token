@@ -1,0 +1,42 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-91d3cb2a25dd058d39b3c673abca5549a9dfb80c",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/swapToken.sol": "project/contracts/swapToken.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/interfaces/IERC20.sol": {
+        "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.28;\n\ninterface IERC20 {\n    function balanceOf(address tokenHolder) external view returns(uint256);\n    function transfer(address recipient, uint256 amount) external;\n    function transferFrom(address owner, address spender, uint256 amount) external;\n    function allowance(address owner, address spender) external view returns(uint256);\n    function approve(address spender, uint256 amount) external;\n    function name() external view returns(string memory);\n    function symbol() external view returns(string memory);\n    function mint(address reciever, uint256 amount) external;\n}"
+      },
+      "project/contracts/swapToken.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\nimport {IERC20} from \"./interfaces/IERC20.sol\";\n\ncontract SwapTokens {\n    address public tokenA;\n    address public tokenB;\n    address public owner;\n\n    uint public rate = 3; \n\n    constructor(address _tokenA, address _tokenB) {\n        tokenA = _tokenA;\n        tokenB = _tokenB;\n        owner = msg.sender;\n    }\n\n    function swapAforB(uint amountA) external {\n        uint amountB = amountA * rate;\n        IERC20(tokenA).transferFrom(msg.sender, address(this), amountA);\n        IERC20(tokenB).transfer(msg.sender, amountB);\n    }\n\n    function swapBforA(uint amountB) external {\n        require(amountB % rate == 0, \"AmountB must be divisible by rate\");\n        uint amountA = amountB / rate;\n        IERC20(tokenB).transferFrom(msg.sender, address(this), amountB);\n        IERC20(tokenA).transfer(msg.sender, amountA);\n    }\n}"
+      }
+    }
+  }
+}
