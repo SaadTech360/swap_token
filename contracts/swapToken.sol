@@ -17,15 +17,14 @@ contract SwapTokens {
     }
 
     function swapAforB(uint amountA) external {
-        uint amountB = amountA * rate;
         IERC20(tokenA).transferFrom(msg.sender, address(this), amountA);
+        uint amountB = amountA * rate;
         IERC20(tokenB).transfer(msg.sender, amountB);
     }
 
     function swapBforA(uint amountB) external {
-        require(amountB % rate == 0, "amount must be greater than rate");
-        uint amountA = amountB / rate;
         IERC20(tokenB).transferFrom(msg.sender, address(this), amountB);
+        uint amountA = amountB / rate;
         IERC20(tokenA).transfer(msg.sender, amountA);
     }
 }
